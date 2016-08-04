@@ -8,7 +8,9 @@ function mapProfile(response) {
       response.picture
       && response.picture.data
       && !response.picture.data.is_silhouette ? response.picture.data.url : null,
-    provider: 'facebook'
+    provider: 'facebook',
+    family_name: response.last_name,
+    given_name: response.first_name
   };
 
   return new Profile(Object.assign(response, overwrites));
@@ -32,7 +34,11 @@ class FacebookProvider extends Provider {
       authorizationMethod: 'GET'
     };
 
-    super.callback(event, options, { profile: { fields: 'id,name,picture,email' } }, callback);
+    super.callback(event, options, {
+      profile: {
+        fields: 'id,name,picture,email,first_name,last_name'
+      }
+    }, callback);
   }
 }
 

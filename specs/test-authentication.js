@@ -49,7 +49,7 @@ describe('Facebook authentication', () => {
 
       nock('https://graph.facebook.com')
         .get('/me')
-        .query({access_token: 'access-token-123', fields: 'id,name,picture,email'})
+        .query({access_token: 'access-token-123', fields: 'id,name,picture,email,first_name,last_name'})
         .reply(200, {
           id: 'user-id-1',
           name: 'Eetu Tuomala',
@@ -59,7 +59,9 @@ describe('Facebook authentication', () => {
               is_silhouette: false,
               url: 'https://avatars3.githubusercontent.com/u/4726921?v=3&s=460'
             }
-          }
+          },
+          first_name: 'Eetu',
+          last_name: 'Tuomala'
         });
     });
 
@@ -72,6 +74,8 @@ describe('Facebook authentication', () => {
         expect(profile.picture).to.equal('https://avatars3.githubusercontent.com/u/4726921?v=3&s=460');
         expect(profile.provider).to.equal('facebook');
         expect(profile.at_hash).to.equal('access-token-123');
+        expect(profile.given_name).to.equal('Eetu');
+        expect(profile.family_name).to.equal('Tuomala');
         done(err);
       })
     });
@@ -94,7 +98,7 @@ describe('Facebook authentication', () => {
 
       nock('https://graph.facebook.com')
         .get('/me')
-        .query({access_token: 'access-token-123', fields: 'id,name,picture,email'})
+        .query({access_token: 'access-token-123', fields: 'id,name,picture,email,first_name,last_name'})
         .reply(200, {
           id: 'user-id-1',
           name: 'Eetu Tuomala',
@@ -104,7 +108,9 @@ describe('Facebook authentication', () => {
               is_silhouette: false,
               url: 'https://avatars3.githubusercontent.com/u/4726921?v=3&s=460'
             }
-          }
+          },
+          first_name: 'Eetu',
+          last_name: 'Tuomala'
         });
     });
 
@@ -116,6 +122,8 @@ describe('Facebook authentication', () => {
         expect(profile.email).to.equal('email@test.com');
         expect(profile.picture).to.equal('https://avatars3.githubusercontent.com/u/4726921?v=3&s=460');
         expect(profile.provider).to.equal('facebook');
+        expect(profile.given_name).to.equal('Eetu');
+        expect(profile.family_name).to.equal('Tuomala');
         done(err);
       })
     });
